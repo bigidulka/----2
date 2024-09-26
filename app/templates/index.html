@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <script>
+        // Client-side validation function
+        function validateForm() {
+            let name = document.forms["productForm"]["name"].value;
+            let price = document.forms["productForm"]["price"].value;
+            let description = document.forms["productForm"]["description"].value;
+            
+            if (name == "" || price == "" || description == "") {
+                alert("All fields must be filled out!");
+                return false;
+            }
+
+            // Check if price is a number
+            if (isNaN(price)) {
+                alert("Price must be a number!");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h1>Add a New Product</h1>
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form name="productForm" action="/" method="POST" onsubmit="return validateForm()">
+        <label for="name">Product Name:</label><br>
+        <input type="text" id="name" name="name"><br><br>
+        
+        <label for="price">Price:</label><br>
+        <input type="text" id="price" name="price"><br><br>
+        
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description"></textarea><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
